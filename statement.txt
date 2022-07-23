@@ -1,0 +1,4 @@
+show variables like "port";
+show databases; (show database existing)
+show tables;
+select current_user;(show my info)
