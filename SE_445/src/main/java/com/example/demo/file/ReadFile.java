@@ -1,10 +1,7 @@
 package com.example.demo.file;
 
 import com.example.demo.models.*;
-import com.example.demo.service.DanhMucService;
-import com.example.demo.service.KhachHangService;
-import com.example.demo.service.TiemCamDoService;
-import com.example.demo.service.TinhThanhService;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -32,10 +29,13 @@ public class ReadFile {
     @Autowired
     private DanhMucService danhMucService;
 
+    @Autowired
+    HoaDonService hoaDonService;
+
     /* choose 1 is KhachHang
      - 2 is TiemCamDo
-     - 3 is HoaDon
-     - 4 is ChiTietHoaDon
+     - 3 is ChiTietHoaDon
+     - 4 is HoaDon
      - 5 is Danh Muc
      - 6 Tinh Thanh
     * */
@@ -77,13 +77,11 @@ public class ReadFile {
                     a = line.split(" , ");
 
                     /* Create object with constructor */
-                    TiemCamDo tiemCamDo = tiemCamDoService.findById(a[6]);
-                    KhachHang khachHang = khachHangService.findById(a[9]);
-                    DanhMuc danhMuc = danhMucService.findById(a[18]);
+                    HoaDon hoaDon = hoaDonService.findById(a[4]);
 
-                    HoaDon hoaDon = new HoaDon(a[0], a[1], Double.parseDouble(a[2]), Boolean.parseBoolean(a[3]), a[4], a[5], tiemCamDo, khachHang, danhMuc);
+                    ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(a[0] , Integer.parseInt(a[1]) , a[2] , Double.parseDouble(a[3]) ,hoaDon);
 
-                    objects.add(hoaDon);
+                    objects.add(chiTietHoaDon);
                 }
             } else if (choose == 4) {
                 a = null;
@@ -93,8 +91,8 @@ public class ReadFile {
 
                     /* Create object with constructor */
                     TiemCamDo tiemCamDo = tiemCamDoService.findById(a[6]);
-                    KhachHang khachHang = khachHangService.findById(a[9]);
-                    DanhMuc danhMuc = danhMucService.findById(a[18]);
+                    KhachHang khachHang = khachHangService.findById(a[7]);
+                    DanhMuc danhMuc = danhMucService.findById(a[8]);
 
                     HoaDon hoaDon = new HoaDon(a[0], a[1], Double.parseDouble(a[2]), Boolean.parseBoolean(a[3]), a[4], a[5], tiemCamDo, khachHang, danhMuc);
 

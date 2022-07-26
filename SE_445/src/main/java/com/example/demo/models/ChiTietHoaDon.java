@@ -33,7 +33,7 @@ public class ChiTietHoaDon {
 
     @Override
     public String toString() {
-        return chi_tiet_hoa_don_id + " , " + so_luong + " , " + ten_san_pham + " , " + gia_tien_san_pham;
+        return chi_tiet_hoa_don_id + " , " + so_luong + " , " + ten_san_pham + " , " + gia_tien_san_pham + " , " + hoaDon.getHoa_don_id();
     }
 
     public String getChi_tiet_hoa_don_id() {

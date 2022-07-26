@@ -1,6 +1,10 @@
 package com.example.demo.models;
 
+import com.example.demo.service.ChiTietHoaDonService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,14 +37,25 @@ public class HoaDon {
     @OneToMany(mappedBy = "hoaDon")
     private Set<ChiTietHoaDon> chiTietHoaDons;
 
+    /* Calculate total price for order */
+    public Double totalPrice(List<ChiTietHoaDon> chiTietHoaDons , String hoa_don_id) {
+        double sum = 0;
+        for (ChiTietHoaDon chiTietHoaDon : chiTietHoaDons) {
+            if (chiTietHoaDon.getHoaDon().getHoa_don_id().equals(hoa_don_id)) {
+                sum += chiTietHoaDon.getSo_luong() * chiTietHoaDon.getGia_tien_san_pham();
+            }
+        }
+        return sum;
+    }
+
     @Override
     public String toString() {
         return  hoa_don_id +  " , " + ten_hang_hoa +  " , " + tong_tien + " , " + trang_thai +
                 " , " + ngay_cam +
                 " , " + ngay_het_han +
-                " , " + tiemCamDo +
-                " , " + khachHang +
-                " , " + danhMuc;
+                " , " + tiemCamDo.getMa_tiem() +
+                " , " + khachHang.getKhach_hang_id() +
+                " , " + danhMuc.getMa_danh_muc();
     }
 
     public HoaDon() {

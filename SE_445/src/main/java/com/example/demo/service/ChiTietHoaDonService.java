@@ -12,7 +12,7 @@ public class ChiTietHoaDonService {
     @Autowired
     private ChiTietHoaDonRepository chiTietHoaDonRepository;
 
-    public List<ChiTietHoaDon> findAll() {
+    public List<? extends Object> findAll() {
         return this.chiTietHoaDonRepository.findAll();
     }
 

@@ -43,7 +43,7 @@ public class KhachHang {
 
     @Override
     public String toString() {
-        return khach_hang_id + " , " + ho_ten + " , " + ten_lot + " , " + cmnd + " , " + so_dien_thoai + " , " + dia_chi + " , " + ngay_sinh + " , " + tinhThanh;
+        return khach_hang_id + " , " + ho_ten + " , " + ten_lot + " , " + cmnd + " , " + so_dien_thoai + " , " + dia_chi + " , " + ngay_sinh + " , " + tinhThanh.getId();
     }
 
     public String getKhach_hang_id() {

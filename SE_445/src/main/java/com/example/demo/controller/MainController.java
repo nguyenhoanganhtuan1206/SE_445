@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class MainController {
     private static final String DANH_MUC_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\DanhMuc.tsv";
     private static final String TINH_THANH_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\TinhThanh.tsv";
     private static final String HOA_DON_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\HoaDon.tsv";
+    private static final String CHI_TIET_HD_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\ChiTietHoaDon.tsv";
 
     @Autowired
     private KhachHangService khachHangService;
@@ -41,6 +43,9 @@ public class MainController {
 
     @Autowired
     private ChiTietHoaDonService chiTietHoaDonService;
+
+    HoaDon calculateSumPriceOrder = new HoaDon();
+    ChiTietHoaDon calculateSumPriceOrderDetail = new ChiTietHoaDon();
 
     /* File service */
     WriteFile writeFile = new WriteFile();
@@ -71,18 +76,20 @@ public class MainController {
         writeFile.writeFile(HOA_DON_PATH, hoaDons, false);
 
         /* Chi tiet hoa don */
-        List<ChiTietHoaDon> chiTietHoaDons = (List<Object>) hoaDonService.findAll();
+        List<Object> chiTietHoaDons = (List<Object>) chiTietHoaDonService.findAll();
+        writeFile.writeFile(CHI_TIET_HD_PATH, chiTietHoaDons, false);
 
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    /* Maria to tsv */
+    /* TSV to Maria */
     @RequestMapping(value = "tsv-to-maria", method = RequestMethod.GET)
     public ResponseEntity<?> tsvToMaria() {
         /* Get list in file tsv */
         List<Object> khachHangTsv = (List<Object>) readFile.readFile(KHACH_HANG_PATH, 1);
         List<Object> tiemCamDosTsv = (List<Object>) readFile.readFile(TIEM_CAM_DO_PATH, 2);
-        List<Object> hoaDonTsv = (List<Object>) readFile.readFile(HOA_DON_PATH, 3);
+        List<Object> chiTietHDTsv = (List<Object>) readFile.readFile(CHI_TIET_HD_PATH, 3);
+        List<Object> hoaDonTsv = (List<Object>) readFile.readFile(HOA_DON_PATH, 4);
         List<Object> danhMucTsv = (List<Object>) readFile.readFile(DANH_MUC_PATH, 5);
         List<Object> tinhThanhTsv = (List<Object>) readFile.readFile(TINH_THANH_PATH, 6);
 
@@ -92,6 +99,7 @@ public class MainController {
         List<Object> tinhThanhDb = (List<Object>) tinhThanhService.findAll();
         List<Object> khachHangDb = (List<Object>) khachHangService.findAll();
         List<Object> hoaDonDb = (List<Object>) hoaDonService.findAll();
+        List<Object> chiTietHDDb = (List<Object>) chiTietHoaDonService.findAll();
 
         /* Tiem Cam Do */
         for (Object o : tiemCamDosTsv) {
@@ -136,10 +144,20 @@ public class MainController {
                 khachHangService.save((KhachHang) o);
             }
         }
+
         /* Hoa Don */
         for (Object o : hoaDonTsv) {
             if (!hoaDonDb.isEmpty()) {
                 if (!hoaDonDb.contains(o)) {
+                    List<ChiTietHoaDon> chiTietHoaDons = (List<ChiTietHoaDon>) chiTietHoaDonService.findAll();
+
+                    /* Set total price */
+                    Double sum = calculateSumPriceOrder.totalPrice(chiTietHoaDons, ((HoaDon) o).getHoa_don_id());
+                    System.out.println(sum);
+                    ((HoaDon) o).setTong_tien(sum);
+
+                    /* Set today */
+                    ((HoaDon)o).setNgay_cam(String.valueOf(LocalDate.now()));
                     hoaDonService.save((HoaDon) o);
                 }
             } else {
@@ -147,7 +165,16 @@ public class MainController {
             }
         }
 
-        System.out.println(khachHangService.findById("KH001"));
+        /* Chi tiet Hoa Don */
+        for (Object o : chiTietHDTsv) {
+            if (!chiTietHDDb.isEmpty()) {
+                if (!chiTietHDDb.contains(o)) {
+                    chiTietHoaDonService.save((ChiTietHoaDon) o);
+                }
+            } else {
+                chiTietHoaDonService.save((ChiTietHoaDon) o);
+            }
+        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
