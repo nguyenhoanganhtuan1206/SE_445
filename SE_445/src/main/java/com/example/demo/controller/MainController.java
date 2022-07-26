@@ -44,8 +44,8 @@ public class MainController {
     @Autowired
     private ChiTietHoaDonService chiTietHoaDonService;
 
+    /* Calculate total price order */
     HoaDon calculateSumPriceOrder = new HoaDon();
-    ChiTietHoaDon calculateSumPriceOrderDetail = new ChiTietHoaDon();
 
     /* File service */
     WriteFile writeFile = new WriteFile();
@@ -153,7 +153,6 @@ public class MainController {
 
                     /* Set total price */
                     Double sum = calculateSumPriceOrder.totalPrice(chiTietHoaDons, ((HoaDon) o).getHoa_don_id());
-                    System.out.println(sum);
                     ((HoaDon) o).setTong_tien(sum);
 
                     /* Set today */
