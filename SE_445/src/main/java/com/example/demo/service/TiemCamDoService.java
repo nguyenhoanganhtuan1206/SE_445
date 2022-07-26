@@ -21,4 +21,8 @@ public class TiemCamDoService {
     public TiemCamDo save(TiemCamDo tiemCamDo) {
         return this.tiemCamDoRepository.save(tiemCamDo);
     }
+
+    public TiemCamDo findById(String id) {
+        return this.tiemCamDoRepository.findById(id).orElse(null);
+    }
 }

@@ -19,4 +19,8 @@ public class DanhMucService {
     public DanhMuc save(DanhMuc danhMuc) {
         return this.danhMucRepository.save(danhMuc);
     }
+
+    public DanhMuc findById(String id) {
+        return this.danhMucRepository.findById(id).orElse(null);
+    }
 }

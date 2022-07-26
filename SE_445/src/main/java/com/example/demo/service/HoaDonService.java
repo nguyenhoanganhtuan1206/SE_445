@@ -15,4 +15,12 @@ public class HoaDonService {
     public List<? extends Object> findAll() {
         return this.hoaDonRepository.findAll();
     }
+
+    public HoaDon save(HoaDon hoaDon) {
+        return this.hoaDonRepository.save(hoaDon);
+    }
+
+    public HoaDon findById(String id) {
+        return this.hoaDonRepository.findById(id).orElse(null);
+    }
 }

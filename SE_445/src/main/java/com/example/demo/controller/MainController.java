@@ -2,10 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.file.ReadFile;
 import com.example.demo.file.WriteFile;
-import com.example.demo.models.DanhMuc;
-import com.example.demo.models.KhachHang;
-import com.example.demo.models.TiemCamDo;
-import com.example.demo.models.TinhThanh;
+import com.example.demo.models.*;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,8 +39,13 @@ public class MainController {
     @Autowired
     private HoaDonService hoaDonService;
 
+    @Autowired
+    private ChiTietHoaDonService chiTietHoaDonService;
+
     /* File service */
     WriteFile writeFile = new WriteFile();
+
+    @Autowired
     ReadFile readFile = new ReadFile();
 
     /* Maria to tsv */
@@ -68,80 +70,84 @@ public class MainController {
         List<Object> hoaDons = (List<Object>) hoaDonService.findAll();
         writeFile.writeFile(HOA_DON_PATH, hoaDons, false);
 
+        /* Chi tiet hoa don */
+        List<ChiTietHoaDon> chiTietHoaDons = (List<Object>) hoaDonService.findAll();
+
         return new ResponseEntity(HttpStatus.OK);
     }
 
     /* Maria to tsv */
     @RequestMapping(value = "tsv-to-maria", method = RequestMethod.GET)
     public ResponseEntity<?> tsvToMaria() {
-       /* Get list in file tsv */
+        /* Get list in file tsv */
+        List<Object> khachHangTsv = (List<Object>) readFile.readFile(KHACH_HANG_PATH, 1);
         List<Object> tiemCamDosTsv = (List<Object>) readFile.readFile(TIEM_CAM_DO_PATH, 2);
+        List<Object> hoaDonTsv = (List<Object>) readFile.readFile(HOA_DON_PATH, 3);
         List<Object> danhMucTsv = (List<Object>) readFile.readFile(DANH_MUC_PATH, 5);
         List<Object> tinhThanhTsv = (List<Object>) readFile.readFile(TINH_THANH_PATH, 6);
-        List<Object> khachHangTsv = (List<Object>) readFile.readFile(KHACH_HANG_PATH, 1);
-        List<Object> hoaDonTsv = (List<Object>) readFile.readFile(HOA_DON_PATH, 3);
-//
-//        /* Get list from maria */
-//        List<Object> tiemCamDosDb = (List<Object>) tiemCamDoService.findAll();
-//        List<Object> danhMucDb = (List<Object>) danhMucService.findAll();
-//        List<Object> tinhThanhDb = (List<Object>) tinhThanhService.findAll();
-//        List<Object> khachHangDb = (List<Object>) khachHangService.findAll();
-//        List<Object> hoaDonDb = (List<Object>) hoaDonService.findAll();
-//
-//        /* Tiem Cam Do */
-//        for (Object o : tiemCamDosTsv) {
-//            if (!tiemCamDosDb.isEmpty()) {
-//                if (!tiemCamDosDb.contains(o)) {
-//                    tiemCamDoService.save((TiemCamDo) o);
-//                }
-//            } else {
-//                tiemCamDoService.save((TiemCamDo) o);
-//            }
-//        }
-//
-//        /* Danh Muc */
-//        for (Object o : danhMucTsv) {
-//            if (!danhMucDb.isEmpty()) {
-//                if (!danhMucDb.contains(o)) {
-//                    danhMucService.save((DanhMuc) o);
-//                }
-//            } else {
-//                danhMucService.save((DanhMuc) o);
-//            }
-//        }
-//
-//        /* Tinh Thanh */
-//        for (Object o : tinhThanhTsv) {
-//            if (!tinhThanhDb.isEmpty()) {
-//                if (!tinhThanhDb.contains(o)) {
-//                    tinhThanhService.save((TinhThanh) o);
-//                }
-//            } else {
-//                tinhThanhService.save((TinhThanh) o);
-//            }
-//        }
-//
-//        /* Khach Hang */
-//        for (Object o : khachHangTsv) {
-//            if (!khachHangDb.isEmpty()) {
-//                if (!khachHangDb.contains(o)) {
-//                    khachHangService.save((KhachHang) o);
-//                }
-//            } else {
-//                khachHangService.save((KhachHang) o);
-//            }
-//        }
-//
-//        /* Hoa Don */
-//        for (Object o : khachHangTsv) {
-//            if (!khachHangDb.isEmpty()) {
-//                if (!khachHangDb.contains(o)) {
-//                    khachHangService.save((KhachHang) o);
-//                }
-//            } else {
-//                khachHangService.save((KhachHang) o);
-//            }
-//        }
+
+        /* Get list from maria */
+        List<Object> tiemCamDosDb = (List<Object>) tiemCamDoService.findAll();
+        List<Object> danhMucDb = (List<Object>) danhMucService.findAll();
+        List<Object> tinhThanhDb = (List<Object>) tinhThanhService.findAll();
+        List<Object> khachHangDb = (List<Object>) khachHangService.findAll();
+        List<Object> hoaDonDb = (List<Object>) hoaDonService.findAll();
+
+        /* Tiem Cam Do */
+        for (Object o : tiemCamDosTsv) {
+            if (!tiemCamDosDb.isEmpty()) {
+                if (!tiemCamDosDb.contains(o)) {
+                    tiemCamDoService.save((TiemCamDo) o);
+                }
+            } else {
+                tiemCamDoService.save((TiemCamDo) o);
+            }
+        }
+
+        /* Danh Muc */
+        for (Object o : danhMucTsv) {
+            if (!danhMucDb.isEmpty()) {
+                if (!danhMucDb.contains(o)) {
+                    danhMucService.save((DanhMuc) o);
+                }
+            } else {
+                danhMucService.save((DanhMuc) o);
+            }
+        }
+
+        /* Tinh Thanh */
+        for (Object o : tinhThanhTsv) {
+            if (!tinhThanhDb.isEmpty()) {
+                if (!tinhThanhDb.contains(o)) {
+                    tinhThanhService.save((TinhThanh) o);
+                }
+            } else {
+                tinhThanhService.save((TinhThanh) o);
+            }
+        }
+
+        /* Khach Hang */
+        for (Object o : khachHangTsv) {
+            if (!khachHangDb.isEmpty()) {
+                if (!khachHangDb.contains(o)) {
+                    khachHangService.save((KhachHang) o);
+                }
+            } else {
+                khachHangService.save((KhachHang) o);
+            }
+        }
+        /* Hoa Don */
+        for (Object o : hoaDonTsv) {
+            if (!hoaDonDb.isEmpty()) {
+                if (!hoaDonDb.contains(o)) {
+                    hoaDonService.save((HoaDon) o);
+                }
+            } else {
+                hoaDonService.save((HoaDon) o);
+            }
+        }
+
+        System.out.println(khachHangService.findById("KH001"));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
