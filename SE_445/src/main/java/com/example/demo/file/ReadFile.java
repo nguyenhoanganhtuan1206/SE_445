@@ -30,7 +30,7 @@ public class ReadFile {
     private DanhMucService danhMucService;
 
     @Autowired
-    HoaDonService hoaDonService;
+    private HoaDonService hoaDonService;
 
     /* choose 1 is KhachHang
      - 2 is TiemCamDo
@@ -124,4 +124,5 @@ public class ReadFile {
         }
         return objects;
     }
+
 }

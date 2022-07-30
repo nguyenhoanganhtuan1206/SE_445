@@ -1,0 +1,44 @@
+.choose_file-container {
+  padding: 12px;
+}
+
+.choose_file-container.border__file {
+  border: 1px solid #dadada;
+  border-radius: 5px;
+}
+
+.choose_file-container .file {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: max-content;
+  background-color: black;
+  color: #fff !important;
+  border-radius: 5px;
+  margin-top: 12px;
+  padding: 8px;
+}
+
+/* Progress file */
+.progress_file-container ,
+.statistic__migrate-table {
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #dadada;
+  margin: 24px 0;
+}
+
+.progress_file-container .progress {
+  height: 30px;
+  font-size: 15px;
+  border-radius: 5px;
+  margin: 14px !important;
+  transition: all 0.3s;
+}
+
+/* Table */
+.statistic__migrate-table td {
+  display: flex;
+  flex-direction: column;
+}
