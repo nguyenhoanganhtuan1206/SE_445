@@ -18,11 +18,6 @@ export class MigrationService {
     return this.httpClient.post<any>(`${BASE_PATH}/tsv-to-maria/${file}` , file);
   }
 
-  /* Get record */
-  getRecordSuccess():Observable<any> {
-    return this.httpClient.patch<any>(`${BASE_PATH}/order-detail`, {});
-  }
-
   /* Push file to storage and show percentage */
   pushFileToStorage(fileUpload: FileUpload): Observable<any> {
     const filePath = `uploads/${fileUpload.file.name}`;

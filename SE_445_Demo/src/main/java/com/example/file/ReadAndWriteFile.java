@@ -29,35 +29,6 @@ public class ReadAndWriteFile {
     @Autowired
     private HoaDonService hoaDonService;
 
-    /* Chi tiet hoa don */
-    public List<? extends Object> readFileOrderDetail(String filePath) {
-        List<Object> orderDetails = new ArrayList<>();
-        File file = new File(filePath);
-        BufferedReader bufferedReader = null;
-        String line = null;
-        String[] a;
-
-        try {
-            a = null;
-            bufferedReader = new BufferedReader(new FileReader(file));
-            while ((line = bufferedReader.readLine()) != null) {
-                a = line.split(" , ");
-
-                /* Create object with constructor */
-                HoaDon hoaDon = hoaDonService.findById(a[4]);
-
-                ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(a[0] , Integer.parseInt(a[1]) , a[2] , Double.parseDouble(a[3]) ,hoaDon);
-
-                orderDetails.add(chiTietHoaDon);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return orderDetails;
-    }
-
-    /* Danh muc */
     public List<? extends Object> readFile(String filePath, int choose) {
         List<Object> objects = new ArrayList<>();
         File file = new File(filePath);

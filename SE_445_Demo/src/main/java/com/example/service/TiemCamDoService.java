@@ -13,7 +13,7 @@ public class TiemCamDoService {
     private TiemCamDoRepository tiemCamDoRepository;
 
     /* Get all */
-    public List<? extends Object> findAll() {
+    public List<TiemCamDo> findAll() {
         return this.tiemCamDoRepository.findAll();
     }
 

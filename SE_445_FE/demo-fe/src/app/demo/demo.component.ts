@@ -2,6 +2,7 @@ import {Component, OnChanges, OnInit} from '@angular/core';
 import {MigrationService} from "../service/migration.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FileUpload} from "../models/FileUpload";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-demo',
@@ -21,23 +22,18 @@ export class DemoComponent implements OnInit, OnChanges {
   transformed = false;
 
   /* Show file failed */
-  fileFailed = [];
-  fileSuccess = [];
+  fileFailed = new Map<any, any>();
+  error = false;
+  fileSuccess = new Map<any, any>();
 
   /* To store file uploaded */
   storeFileTemp: any[] = [];
-
-  /* To store all record */
-  // storeRecordsSuccess = new Map<any , any>();
-  storeRecordsSuccess: any[] = [];
-  storeRecordTemp = 0;
-  // storeRecordsSuccess = 0;
+  storeRecord = 0;
 
   constructor(private migrationService: MigrationService, private fb: FormBuilder) {
   }
 
   ngOnChanges(): void {
-    console.log('hi')
   }
 
   ngOnInit(): void {
@@ -65,9 +61,12 @@ export class DemoComponent implements OnInit, OnChanges {
 
       this.migrationService.tsvToMaria(this.urls[i].file.name).subscribe((records: any) => {
         this.transformed = true;
-        
-        this.fileSuccess = this.storeFileTemp;
+
+        this.storeRecord = records;
+        this.fileSuccess.set(this.urls[i].file.name, records);
       }, error => {
+        this.error = true;
+        this.fileFailed.set(this.urls[i].file.name, this.storeRecord);
       }, () => {
         /* Push file and show progress */
         for (let i = 0; i < this.urls.length; i++) {
@@ -82,6 +81,7 @@ export class DemoComponent implements OnInit, OnChanges {
           });
         }
       });
+
     }
   }
 }

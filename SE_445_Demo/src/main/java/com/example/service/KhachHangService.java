@@ -13,7 +13,7 @@ public class KhachHangService {
     private KhachHangRepository khachHangRepository;
 
     /* Get all */
-    public List<? extends Object> findAll() {
+    public List<KhachHang> findAll() {
         return this.khachHangRepository.findAll();
     }
 

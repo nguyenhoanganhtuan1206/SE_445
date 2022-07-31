@@ -12,7 +12,7 @@ public class HoaDonService {
     @Autowired
     private HoaDonRepository hoaDonRepository;
 
-    public List<? extends Object> findAll() {
+    public List<HoaDon> findAll() {
         return this.hoaDonRepository.findAll();
     }
 
