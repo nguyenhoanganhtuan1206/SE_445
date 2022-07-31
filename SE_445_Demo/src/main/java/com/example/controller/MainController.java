@@ -119,22 +119,20 @@ public class MainController {
 
             /* Chi tiet Hoa Don */
             for (Object o : tiemCamDoTSV) {
-                if (!tiemCamDoDB.isEmpty()) {
-                    try {
+                try {
+                    if (!tiemCamDoDB.isEmpty()) {
                         TiemCamDo tiemCamDo = tiemCamDoService.findById(((TiemCamDo) o).getMa_tiem());
                         if (!tiemCamDoDB.contains(tiemCamDo)) {
-                            counter++;
                             tiemCamDoService.save((TiemCamDo) o);
                         } else {
                             continue;
                         }
-                    } catch (Exception e) {
-                        counter = -1;
-                        e.printStackTrace();
+                    } else {
+                        tiemCamDoService.save((TiemCamDo) o);
                     }
-                } else {
                     counter++;
-                    tiemCamDoService.save((TiemCamDo) o);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -145,22 +143,20 @@ public class MainController {
 
             /* Chi tiet Hoa Don */
             for (Object o : customerTSV) {
-                if (!customerDB.isEmpty()) {
-                    try {
+                try {
+                    if (!customerDB.isEmpty()) {
                         KhachHang khachHang = khachHangService.findById(((KhachHang) o).getKhach_hang_id());
                         if (!customerDB.contains(khachHang)) {
-                            counter++;
                             khachHangService.save((KhachHang) o);
                         } else {
                             continue;
                         }
-                    } catch (Exception e) {
-                        counter = -1;
-                        e.printStackTrace();
+                    } else {
+                        khachHangService.save((KhachHang) o);
                     }
-                } else {
                     counter++;
-                    khachHangService.save((KhachHang) o);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -169,24 +165,22 @@ public class MainController {
             List<HoaDon> orderDB = hoaDonService.findAll();
             List<Object> orderTSV = (List<Object>) readAndWriteFile.readFile(HOA_DON_PATH, 4);
 
-            /* Chi tiet Hoa Don */
             for (Object o : orderTSV) {
-                if (!orderDB.isEmpty()) {
-                    try {
+                try {
+                    if (!orderDB.isEmpty()) {
                         HoaDon hoaDon = hoaDonService.findById(((HoaDon) o).getHoa_don_id());
                         if (!orderDB.contains(hoaDon)) {
-                            counter++;
                             hoaDonService.save((HoaDon) o);
                         } else {
                             continue;
                         }
-                    } catch (Exception e) {
-                        counter = -1;
-                        e.printStackTrace();
+                    } else {
+                        hoaDonService.save((HoaDon) o);
                     }
-                } else {
                     counter++;
-                    hoaDonService.save((HoaDon) o);
+                } catch (Exception e) {
+                    counter = 0;
+                    e.printStackTrace();
                 }
             }
 
@@ -195,24 +189,21 @@ public class MainController {
             List<DanhMuc> categoriesDB = danhMucService.findAll();
             List<Object> categoriesTSV = (List<Object>) readAndWriteFile.readFile(DANH_MUC_PATH, 5);
 
-            /* Chi tiet Hoa Don */
             for (Object o : categoriesTSV) {
-                if (!categoriesDB.isEmpty()) {
-                    try {
+                try {
+                    if (!categoriesDB.isEmpty()) {
                         DanhMuc danhMuc = danhMucService.findById(((DanhMuc) o).getMa_danh_muc());
                         if (!categoriesDB.contains(danhMuc)) {
-                            counter++;
                             danhMucService.save((DanhMuc) o);
                         } else {
                             continue;
                         }
-                    } catch (Exception e) {
-                        counter = -1;
-                        e.printStackTrace();
+                    } else {
+                        danhMucService.save((DanhMuc) o);
                     }
-                } else {
                     counter++;
-                    danhMucService.save((DanhMuc) o);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -223,22 +214,20 @@ public class MainController {
 
             /* Chi tiet Hoa Don */
             for (Object o : tinhThanhTSV) {
-                if (!tinhThanhDB.isEmpty()) {
-                    try {
+                try {
+                    if (!tinhThanhDB.isEmpty()) {
                         TinhThanh tinhThanh = tinhThanhService.findById(((TinhThanh) o).getId());
                         if (!tinhThanhDB.contains(tinhThanh)) {
-                            counter++;
                             tinhThanhService.save((TinhThanh) o);
                         } else {
                             continue;
                         }
-                    } catch (Exception e) {
-                        counter = -1;
-                        e.printStackTrace();
+                    } else {
+                        tinhThanhService.save((TinhThanh) o);
                     }
-                } else {
                     counter++;
-                    tinhThanhService.save((TinhThanh) o);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
