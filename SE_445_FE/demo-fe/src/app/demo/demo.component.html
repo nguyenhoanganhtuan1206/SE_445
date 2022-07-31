@@ -20,7 +20,6 @@
   <div class="progress_file-container">
     <h3>Conversion progress</h3>
     <div *ngIf="transformed" class="progress mt-2">
-      <!--      <p style="margin: 0"></p>-->
       <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ percentage }}"
            aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: percentage + '%' }">
         {{ percentage }}%
@@ -31,18 +30,17 @@
   <div class="statistic__migrate-table">
     <h3>Statistic</h3>
 
-    <table class="table table-striped">
+    <table *ngIf="fileSuccess.length > 0"  class="table table-striped">
       <tr>
-        <th></th>
+        <th>STT</th>
         <th>OK</th>
         <th>Failed</th>
         <th>Transform</th>
         <th>Có bao nhiêu bản ghi</th>
       </tr>
-      <tr>
-        <td></td>
-        <td *ngFor="let success of fileSuccess">{{success.file.name}}</td>
-        <td *ngFor="let fail of fileFailed" class="danger">{{fail.file.name}}</td>
+      <tr *ngFor="let success of fileSuccess;let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{success.file.name}}</td>
       </tr>
     </table>
   </div>

@@ -12,7 +12,7 @@ public class DanhMucService {
     @Autowired
     private DanhMucRepository danhMucRepository;
 
-    public List<? extends Object> findAll() {
+    public List<DanhMuc> findAll() {
         return this.danhMucRepository.findAll();
     }
 

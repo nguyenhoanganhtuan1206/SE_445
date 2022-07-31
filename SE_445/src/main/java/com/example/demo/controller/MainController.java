@@ -21,12 +21,12 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200/")
 public class MainController {
 
-    private static final String KHACH_HANG_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\KhachHang.tsv";
-    private static final String TIEM_CAM_DO_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\TiemCamDo.tsv";
-    private static final String DANH_MUC_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\DanhMuc.tsv";
-    private static final String TINH_THANH_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\TinhThanh.tsv";
-    private static final String HOA_DON_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\HoaDon.tsv";
-    private static final String CHI_TIET_HD_PATH = "D:\\TichHop\\SE_445\\src\\main\\java\\com\\example\\demo\\data\\ChiTietHoaDon.tsv";
+    private static final String KHACH_HANG_PATH = "D:\\TichHop\\SE_445_Demo\\src\\main\\java\\com\\example\\data\\KhachHang.tsv";
+    private static final String TIEM_CAM_DO_PATH = "D:\\TichHop\\SE_445_Demo\\src\\main\\java\\com\\example\\data\\TiemCamDo.tsv";
+    private static final String DANH_MUC_PATH = "D:\\TichHop\\SE_445_Demo\\src\\main\\java\\com\\example\\data\\DanhMuc.tsv";
+    private static final String TINH_THANH_PATH = "D:\\TichHop\\SE_445_Demo\\src\\main\\java\\com\\example\\data\\TinhThanh.tsv";
+    private static final String HOA_DON_PATH = "D:\\TichHop\\SE_445_Demo\\src\\main\\java\\com\\example\\data\\HoaDon.tsv";
+    private static final String CHI_TIET_HD_PATH = "D:\\TichHop\\SE_445_Demo\\src\\main\\java\\com\\example\\data\\ChiTietHoaDon.tsv";
 
     @Autowired
     private KhachHangService khachHangService;
